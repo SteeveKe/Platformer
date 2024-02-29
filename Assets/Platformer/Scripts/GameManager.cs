@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Microsoft.Unity.VisualStudio.Editor;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using Image = UnityEngine.UI.Image;
 
@@ -17,18 +19,26 @@ public class GameManager : MonoBehaviour
     public AudioSource coinSound;
     public AudioSource brickSound;
     public ParticleSystem brickeffect;
+    public GameObject GameOverPanel;
+    public Transform spawn;
+    public GameObject mario;
+    public GameObject lvl1;
+    public GameObject lvl2;
+    public GameObject background;
 
     public float animationSpeed;
     
     private (int, int) _level;
     private int _score;
     private int _coins;
-    private float _time; 
+    [SerializeField]private float _time; 
     // Start is called before the first frame update
     void Start()
     {
+        mario.transform.position = spawn.position;
+        GameOverPanel.SetActive(false);
         _level = (1, 1);
-        _time = 400;
+        _time = 100;
         _coins = 0;
         _score = 0;
         _isRunning = true;
@@ -63,6 +73,10 @@ public class GameManager : MonoBehaviour
             _time -= 1f;
             timeText.text = "Time\n" + _time;
         }
+        if (_time <= 0)
+        {
+            GameOverPanel.SetActive(true);
+        }
     }
 
     private void SetWorld()
@@ -94,12 +108,29 @@ public class GameManager : MonoBehaviour
 
     public void BrickPlay()
     {
-        brickeffect.Play();
-        brickSound.Play();
+        if (!brickeffect.IsDestroyed() && !brickSound.IsDestroyed())
+        {
+            brickeffect.Play();
+            brickSound.Play();
+        }
     }
 
     public void CoinPlay()
     {
-        coinSound.Play();
+        if (!coinSound.IsDestroyed())
+        {
+            coinSound.Play();
+        }
+    }
+
+    public void NextLevel()
+    {
+        _level = (_level.Item1 + 1, _level.Item2);
+        _time = 100;
+        SetWorld();
+        mario.transform.position = spawn.position;
+        lvl1.SetActive(false);
+        lvl2.SetActive(true);
+        background.SetActive(false);
     }
 }

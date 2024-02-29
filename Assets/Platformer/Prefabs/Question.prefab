@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 5608434056307454111}
   m_Layer: 6
   m_Name: Question
-  m_TagString: Untagged
+  m_TagString: breakable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -120,6 +120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: '?'
+  _brickBreack: {fileID: 2652198492393551387, guid: d94221691cf23ce429136e2be05d002b, type: 3}
 --- !u!95 &5608434056307454111
 Animator:
   serializedVersion: 5

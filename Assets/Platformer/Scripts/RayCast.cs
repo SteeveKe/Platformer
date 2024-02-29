@@ -29,7 +29,25 @@ public class RayCast : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit, 100f, mask))
             {
-                Destroy(hit.collider.gameObject);
+                BlocksType b = hit.collider.gameObject.GetComponent<BlocksType>();
+                GameManager g = b.GetManager();
+                if (b.type == "?")
+                {
+                    g.AddCoins(1);
+                    g.AddScore(100);
+                    g.CoinPlay();
+                    hit.collider.gameObject.SetActive(false);
+                }
+                if (b.type == "b")
+                {
+                    Vector3 pos = gameObject.transform.position;
+                    pos.z -= 0.1f;
+                    g.brickeffect.gameObject.transform.position = pos;
+                    g.AddScore(100);
+                    g.BrickPlay();
+                    hit.collider.gameObject.SetActive(false);
+                }
+                
             }
         }
         

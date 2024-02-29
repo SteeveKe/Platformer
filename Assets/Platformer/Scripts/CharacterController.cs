@@ -6,64 +6,78 @@ using UnityEngine;
 public class CharacterController : MonoBehaviour
 {
     public float acceleration = 10f;
-
     public float maxSpeed = 10f;
-
     public float jumpImpulse = 30f;
-
     public bool isGrounded;
-
     public float jumpBoost = 3f;
+    public float mouvement;
+
+    private Rigidbody rb;
+    private Collider col;
+    private Animator anim;
     // Start is called before the first frame update
     void Start()
     {
-        
-    }
-
-    private void FixedUpdate()
-    {
-        
+        rb = GetComponent<Rigidbody>();
+        col = GetComponent<Collider>();
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
         float horizontalMovement = Input.GetAxis("Horizontal");
-        Rigidbody rbody = GetComponent<Rigidbody>();
-        rbody.velocity += Vector3.right * horizontalMovement * acceleration * Time.deltaTime;
+        mouvement = horizontalMovement;
+        rb.velocity += Vector3.right * horizontalMovement * acceleration * Time.deltaTime;
         
-        if (Math.Abs(rbody.velocity.x) > maxSpeed)
+        if (Math.Abs(rb.velocity.x) > maxSpeed)
         {
-            Vector3 newvel = rbody.velocity;
+            Vector3 newvel = rb.velocity;
             newvel.x = Math.Clamp(newvel.x, -maxSpeed, maxSpeed);
-            rbody.velocity = newvel;
-            //rbody.velocity = rbody.velocity.normalized * maxSpeed;
+            rb.velocity = newvel;
         }
 
-        Collider col = GetComponent<Collider>();
-        float halfHeight = col.bounds.extents.y + 0.03f;
+        Jump();
+        Rotation();
+        Animation();
         
-        Vector3 startPoint = transform.position;
+        
+    }
+
+    private void Jump()
+    {
+        var bounds = col.bounds;
+        float halfHeight = bounds.center.y - bounds.min.y + 0.5f;
+
+        Vector3 startPoint = bounds.center;
         Vector3 endPoint = startPoint + Vector3.down * halfHeight;
         
-        isGrounded = Physics.Raycast(startPoint, Vector3.down, 2f);
-        Color lineColor = isGrounded ? Color.red : Color.blue;
+        isGrounded = Physics.Raycast(startPoint, Vector3.down, halfHeight);
+        Color lineColor = isGrounded ? Color.green : Color.red;
         Debug.DrawLine(startPoint, endPoint, lineColor, 0f, false);
         
         if (isGrounded && Input.GetKeyDown(KeyCode.Space))
         {
-            rbody.AddForce(Vector3.up * jumpImpulse, ForceMode.Impulse);
+            rb.AddForce(Vector3.up * jumpImpulse, ForceMode.Impulse);
         }
         else if (!isGrounded && Input.GetKey(KeyCode.Space))
         {
-            if (rbody.velocity.y > 0)
+            if (rb.velocity.y > 0)
             {
-                rbody.AddForce(Vector3.up * jumpBoost, ForceMode.Force);
+                rb.AddForce(Vector3.up * jumpBoost, ForceMode.Force);
             }
         }
-
-        float yaw = rbody.velocity.x > 0 ? 90 : -90;
+    }
+    private void Rotation()
+    {
+        float yaw = rb.velocity.x > 0 ? 90 : -90;
         transform.rotation = Quaternion.Euler(0f, yaw, 0f);
     }
-    
+
+    private void Animation()
+    {
+        float speed = Math.Abs(rb.velocity.x);
+        anim.SetFloat("Speed", speed);
+        anim.SetBool("InAir", !isGrounded);
+    }
 }
