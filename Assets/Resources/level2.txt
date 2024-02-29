@@ -10,7 +10,7 @@ a                                 b??b                b??b                      
                                bbbbbbbbbb  bbbbbb   bbbbbbbb   bbbbbbbb      bbbbb                                                          bbbbb   bbbbbbbbbbbb                               xxx
       b?bb?b                                                                                                                                                                                   xxx
                                                                                                      xxxx                    xxxxx                                             c               xxx
-                         t                                                                    t     xxxxxx     t             xxxxxxxx         q                        xxxxxxxxxxxxxxxxxxx     xxx
+                         t                                                                    t     xxxxxx     t             xxxxxxxx                                  xxxxxxxxxxxxxxxxxxx     xxx
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                               xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx   xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                    
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                               xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx   xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                   
                                                                                                                                                                                          xxxxxxxxxx                                                                                             

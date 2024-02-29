@@ -17,6 +17,7 @@ public class Mouvement : MonoBehaviour
     public float apexMax = 4f;
     public float jumpBuffer = 0.5f;
     public float cayoteTime = 1f;
+    public float maxFallspeed;
 
     public float cayoteTimerJump = 0f;
     private bool canJumpBuffer;
@@ -43,8 +44,19 @@ public class Mouvement : MonoBehaviour
         Rotation();
         Animation();
         Walk(horizontalMovement);
+        FallSpeed();
     }
 
+    private void FallSpeed()
+    {
+	    if (rb.velocity.y < -maxSpeed )
+	    {
+		    Vector3 fall = rb.velocity;
+		    fall.y = -maxFallspeed;
+		    rb.velocity = fall;
+	    }    
+    }
+    
     private void Walk(float horizontalMovement)
     {
 	    float targetSpeed = horizontalMovement * maxSpeed;
@@ -83,6 +95,7 @@ public class Mouvement : MonoBehaviour
         {
 	        if (isGrounded)
 	        {
+		        cayoteTimerJump = -1;
 		        isJumping = true;
 		        rb.AddForce(Vector3.up * jumpImpulse, ForceMode.Impulse);
 	        }

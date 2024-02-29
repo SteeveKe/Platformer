@@ -4911,6 +4911,7 @@ MonoBehaviour:
   apexMax: 1.7
   jumpBuffer: 1.3
   cayoteTime: 0.5
+  maxFallspeed: 10
   cayoteTimerJump: 0
 --- !u!1 &956505797067218623
 GameObject:
@@ -5252,6 +5253,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e255baae15957a441af8b4474d9ef5d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timer: 0
 --- !u!1 &2064433348397055896
 GameObject:
   m_ObjectHideFlags: 0
